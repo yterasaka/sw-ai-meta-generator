@@ -1,27 +1,31 @@
 {
-    "name": "ai-meta-generator/ai-meta-generator",
-    "description": "ai-meta-generator/ai-meta-generator",
-    "type": "shopware-platform-plugin",
-    "version": "1.0.0",
-    "license": "MIT",
-    "require": {
-        "shopware/core": "~6.7.0"
+  "name": "ai-meta-generator/ai-meta-generator",
+  "description": "ai-meta-generator/ai-meta-generator",
+  "type": "shopware-platform-plugin",
+  "version": "0.0.1",
+  "license": "MIT",
+  "require": {
+    "shopware/core": "~6.7.0"
+  },
+  "extra": {
+    "shopware-plugin-class": "AiMetaGenerator\\AiMetaGenerator",
+    "label": {
+      "de-DE": "AI Meta Generator",
+      "en-GB": "AI Meta Generator"
     },
-    "extra": {
-        "shopware-plugin-class": "AiMetaGenerator\\AiMetaGenerator",
-        "label": {
-            "de-DE": "Skeleton plugin",
-            "en-GB": "Skeleton plugin"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "AiMetaGenerator\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "AiMetaGenerator\\Tests\\": "tests/"
-        }
+    "description": {
+      "de-DE": "Plug-in zur Generierung von Metadaten mittels KI",
+      "en-GB": "Plug-in to generate metadata using AI"
     }
+  },
+  "autoload": {
+    "psr-4": {
+      "AiMetaGenerator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AiMetaGenerator\\Tests\\": "tests/"
+    }
+  }
 }
