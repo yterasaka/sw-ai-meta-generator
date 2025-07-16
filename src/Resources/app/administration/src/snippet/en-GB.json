@@ -1,8 +1,8 @@
 {
-    "swag-example": {
-        "general": {
-            "mainMenuItemGeneral": "My custom module",
-            "descriptionTextModule": "Manage this custom module here"
+    "ai-meta-generator": {
+        "settings": {
+            "title": "AI Meta Generator",
+            "openaiApiKey": "OpenAI API Key"
         }
     }
 }

@@ -4,12 +4,16 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
 
     <card>
-        <title>Minimal configuration</title>
+        <title>AI Meta Generator Settings</title>
+        <title lang="de-DE">AI Meta Generator Einstellungen</title>
 
-        <input-field type="text">
-            <name>textField</name>
-            <label>Test field with default value</label>
-            <defaultValue>test</defaultValue>
+        <input-field type="password">
+            <name>openaiApiKey</name>
+            <label>OpenAI API Key</label>
+            <label lang="de-DE">OpenAI API Schlüssel</label>
+            <helpText>Enter your OpenAI API key to enable AI meta generation</helpText>
+            <helpText lang="de-DE">Geben Sie Ihren OpenAI API-Schlüssel ein, um die AI-Meta-Generierung zu aktivieren</helpText>
+            <required>true</required>
         </input-field>
     </card>
 
