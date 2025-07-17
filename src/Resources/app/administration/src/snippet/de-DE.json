@@ -3,9 +3,14 @@
     "settings": {
       "title": "AI Meta Generator",
       "openaiApiKey": "OpenAI API Schlüssel"
-    },
-    "product": {
-      "generateMetadata": "AI Metadaten generieren"
+    }
+  },
+  "sw-product": {
+    "seoForm": {
+      "generateMetadata": "AI Metadaten generieren",
+      "metadataGeneratedSuccess": "Metadaten erfolgreich generiert",
+      "errorGeneratingMetadata": "Fehler beim Generieren der Metadaten",
+      "errorProductNotFound": "Produkt nicht gefunden"
     }
   }
 }

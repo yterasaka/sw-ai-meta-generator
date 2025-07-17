@@ -2,26 +2,30 @@
 
 namespace AiMetaGenerator\Service;
 
-use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Content\Product\ProductEntity;
+use Psr\Log\LoggerInterface;
 
 class MetaGeneratorService
 {
     private OpenAiService $openAiService;
     private EntityRepository $productRepository;
     private EntityRepository $languageRepository;
+    private LoggerInterface $logger;
 
     public function __construct(
         OpenAiService    $openAiService,
         EntityRepository $productRepository,
-        EntityRepository $languageRepository
+        EntityRepository $languageRepository,
+        LoggerInterface  $logger
     )
     {
         $this->openAiService = $openAiService;
         $this->productRepository = $productRepository;
         $this->languageRepository = $languageRepository;
+        $this->logger = $logger;
     }
 
     public function generateMetadataForProduct(string $productId, Context $context): array
@@ -32,9 +36,6 @@ class MetaGeneratorService
             throw new \RuntimeException('Product not found');
         }
 
-        $languageId = $context->getLanguageId();
-        $locale = $this->getLocaleFromLanguageId($languageId, $context);
-
         $productName = $product->getTranslated()['name'] ?? $product->getName();
         $description = $product->getTranslated()['description'] ?? $product->getDescription();
 
@@ -42,12 +43,40 @@ class MetaGeneratorService
             throw new \RuntimeException('Product name is required for metadata generation');
         }
 
-        return $this->openAiService->generateMetadata(
+        return $this->generateMetadataFromData($productName, $description ?? '', $context);
+    }
+
+    public function generateMetadataFromData(string $productName, string $description, Context $context): array
+    {
+        $languageId = $context->getLanguageId();
+        $locale = $this->getLocaleFromLanguageId($languageId, $context);
+
+        if ($_ENV['APP_ENV'] === 'dev') {
+            $this->logger->info('AI Meta Generator: Language ID: ' . $languageId . ', Locale: ' . $locale);
+        }
+
+        if (!$productName) {
+            throw new \RuntimeException('Product name is required for metadata generation');
+        }
+
+        $salesChannelId = null;
+        $source = $context->getSource();
+        if (method_exists($source, 'getSalesChannelId')) {
+            $salesChannelId = $source->getSalesChannelId();
+        }
+
+        $generatedMetadata = $this->openAiService->generateMetadata(
             $productName,
-            $description ?? '',
+            $description,
             $locale,
-            $context->getSource()->getSalesChannelId()
+            $salesChannelId
         );
+
+        return [
+            'metaTitle' => $generatedMetadata['metaTitle'] ?? $productName,
+            'metaDescription' => $generatedMetadata['metaDescription'] ?? $description,
+            'keywords' => $generatedMetadata['keywords'] ?? ''
+        ];
     }
 
     private function getProduct(string $productId, Context $context): ?ProductEntity
@@ -66,29 +95,10 @@ class MetaGeneratorService
 
         $language = $this->languageRepository->search($criteria, $context)->first();
 
-        return $language?->getLocale()?->getCode() ?? 'en-GB';
-    }
-
-    public function generateMetadataFromData(string $productName, string $description, Context $context): array
-    {
-        $languageId = $context->getLanguageId();
-        $locale = $this->getLocaleFromLanguageId($languageId, $context);
-
-        if (!$productName) {
-            throw new \RuntimeException('Product name is required for metadata generation');
+        if ($language && $language->getLocale()) {
+            return $language->getLocale()->getCode();
         }
 
-        $salesChannelId = null;
-        $source = $context->getSource();
-        if (method_exists($source, 'getSalesChannelId')) {
-            $salesChannelId = $source->getSalesChannelId();
-        }
-
-        return $this->openAiService->generateMetadata(
-            $productName,
-            $description,
-            $locale,
-            $salesChannelId
-        );
+        return 'en-GB';
     }
 }

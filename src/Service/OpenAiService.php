@@ -68,23 +68,25 @@ class OpenAiService
 
     private function buildPrompt(string $productName, string $description, string $locale): string
     {
-
-        return sprintf(
-            "Generate SEO-optimized meta title and meta description for this product in the language for locale '%s':\n\n" .
+        $prompt = sprintf(
+            "Generate SEO-optimized meta title, meta description, and keywords for this product in the language for locale '%s':\n\n" .
             "Product Name: %s\n" .
             "Description: %s\n\n" .
             "Requirements:\n" .
             "- Meta title: 50-60 characters, include main keywords\n" .
             "- Meta description: 150-160 characters, compelling and descriptive\n" .
+            "- Keywords: 3-5 relevant SEO keywords separated by commas\n" .
             "- Use natural, native language appropriate for locale %s\n" .
             "- Follow SEO best practices for the target market\n\n" .
             "Return the result in JSON format:\n" .
-            '{"metaTitle": "...", "metaDescription": "..."}',
+            '{"metaTitle": "...", "metaDescription": "...", "keywords": "..."}',
             $locale,
             $productName,
             strip_tags($description),
             $locale
         );
+        
+        return $prompt;
     }
 
     private function parseResponse(array $data): array
@@ -98,7 +100,8 @@ class OpenAiService
 
         return [
             'metaTitle' => $parsed['metaTitle'],
-            'metaDescription' => $parsed['metaDescription']
+            'metaDescription' => $parsed['metaDescription'],
+            'keywords' => $parsed['keywords'] ?? ''
         ];
     }
 }

@@ -6,8 +6,10 @@
         <sw-button 
             variant="primary" 
             size="small"
+            :disabled="isGenerating"
+            :isLoading="isGenerating"
             @click="onGenerateMetadata">
-            {{ $tc('ai-meta-generator.product.generateMetadata') }}
+            {{ $tc('sw-product.seoForm.generateMetadata') }}
         </sw-button>
     </div>
     {% endblock %}

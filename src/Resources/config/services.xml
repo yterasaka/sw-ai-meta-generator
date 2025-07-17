@@ -5,6 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
         <service id="AiMetaGenerator\Service\OpenAiService">
             <argument type="service" id="shopware.app_system.guzzle"/>
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
@@ -15,15 +16,19 @@
             <argument type="service" id="AiMetaGenerator\Service\OpenAiService"/>
             <argument type="service" id="product.repository"/>
             <argument type="service" id="language.repository"/>
+            <argument type="service" id="logger"/>
+        </service>
+
+        <service id="AiMetaGenerator\Controller\Api\MetaGeneratorController" public="true">
+            <argument type="service" id="AiMetaGenerator\Service\MetaGeneratorService"/>
+            <argument type="service" id="logger"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
         </service>
 
         <service id="AiMetaGenerator\Subscriber\MySubscriber">
             <tag name="kernel.event_subscriber"/>
-        </service>
-
-        <service id="AiMetaGenerator\Command\TestMetaGeneratorCommand">
-            <argument type="service" id="AiMetaGenerator\Service\MetaGeneratorService"/>
-            <tag name="console.command"/>
         </service>
 
     </services>
