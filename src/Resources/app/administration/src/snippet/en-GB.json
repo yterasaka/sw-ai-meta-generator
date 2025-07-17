@@ -1,8 +1,11 @@
 {
-    "ai-meta-generator": {
-        "settings": {
-            "title": "AI Meta Generator",
-            "openaiApiKey": "OpenAI API Key"
-        }
+  "ai-meta-generator": {
+    "settings": {
+      "title": "AI Meta Generator",
+      "openaiApiKey": "OpenAI API Key"
+    },
+    "product": {
+      "generateMetadata": "Generate AI Metadata"
     }
+  }
 }

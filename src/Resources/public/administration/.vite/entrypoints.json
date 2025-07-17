@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/aimetagenerator/administration/",
+  "entryPoints": {
+    "ai-meta-generator": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/aimetagenerator/administration/assets/ai-meta-generator-LhkeL2G2.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

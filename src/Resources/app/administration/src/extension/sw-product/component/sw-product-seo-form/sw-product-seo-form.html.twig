@@ -1,0 +1,14 @@
+{% block sw_product_seo_form_keywords %}
+    {% parent %}
+    
+    {% block sw_product_seo_form_ai_generator_button %}
+    <div class="sw-product-seo-form__ai-generator" style="margin-bottom: 20px;">
+        <sw-button 
+            variant="primary" 
+            size="small"
+            @click="onGenerateMetadata">
+            {{ $tc('ai-meta-generator.product.generateMetadata') }}
+        </sw-button>
+    </div>
+    {% endblock %}
+{% endblock %}
