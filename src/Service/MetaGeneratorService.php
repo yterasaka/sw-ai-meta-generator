@@ -42,7 +42,7 @@ class MetaGeneratorService
 
         $salesChannelId = null;
         $source = $context->getSource();
-        if (method_exists($source, 'getSalesChannelId')) {
+        if ($source instanceof SalesChannelContextSource) {
             $salesChannelId = $source->getSalesChannelId();
         }
 
