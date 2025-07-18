@@ -14,7 +14,6 @@
 
         <service id="AiMetaGenerator\Service\MetaGeneratorService">
             <argument type="service" id="AiMetaGenerator\Service\OpenAiService"/>
-            <argument type="service" id="product.repository"/>
             <argument type="service" id="language.repository"/>
             <argument type="service" id="logger"/>
         </service>
