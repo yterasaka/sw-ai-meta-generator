@@ -12,16 +12,19 @@ class MetaGeneratorService
     private OpenAiService $openAiService;
     private EntityRepository $languageRepository;
     private LoggerInterface $logger;
+    private string $environment;
 
     public function __construct(
         OpenAiService    $openAiService,
         EntityRepository $languageRepository,
-        LoggerInterface  $logger
+        LoggerInterface  $logger,
+        string          $environment
     )
     {
         $this->openAiService = $openAiService;
         $this->languageRepository = $languageRepository;
         $this->logger = $logger;
+        $this->environment = $environment;
     }
 
     public function generateMetadataFromData(string $productName, string $description, Context $context): array
@@ -29,7 +32,7 @@ class MetaGeneratorService
         $languageId = $context->getLanguageId();
         $locale = $this->getLocaleFromLanguageId($languageId, $context);
 
-        if ($_ENV['APP_ENV'] === 'dev') {
+        if ($this->environment === 'dev') {
             $this->logger->info('AI Meta Generator: Language ID: ' . $languageId . ', Locale: ' . $locale);
         }
 

@@ -16,6 +16,7 @@
             <argument type="service" id="AiMetaGenerator\Service\OpenAiService"/>
             <argument type="service" id="language.repository"/>
             <argument type="service" id="logger"/>
+            <argument>%kernel.environment%</argument>
         </service>
 
         <service id="AiMetaGenerator\Controller\Api\MetaGeneratorController" public="true">
