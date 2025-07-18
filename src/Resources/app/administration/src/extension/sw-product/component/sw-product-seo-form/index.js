@@ -15,11 +15,30 @@ Component.override("sw-product-seo-form", {
     };
   },
 
+  computed: {
+    canGenerateMetadata() {
+      return (
+        this.product &&
+        this.product.name &&
+        this.product.name.trim() !== "" &&
+        this.product.description &&
+        this.product.description.trim() !== ""
+      );
+    },
+  },
+
   methods: {
     async onGenerateMetadata() {
       if (!this.product) {
         this.createNotificationError({
           message: this.$tc("sw-product.seoForm.errorProductNotFound"),
+        });
+        return;
+      }
+
+      if (!this.canGenerateMetadata) {
+        this.createNotificationError({
+          message: this.$tc("sw-product.seoForm.errorMissingRequiredFields"),
         });
         return;
       }

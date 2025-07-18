@@ -2,15 +2,25 @@
     {% parent %}
     
     {% block sw_product_seo_form_ai_generator_button %}
-    <div class="sw-product-seo-form__ai-generator" style="margin-bottom: 20px;">
-        <sw-button 
-            variant="primary" 
-            size="small"
-            :disabled="isGenerating"
-            :isLoading="isGenerating"
-            @click="onGenerateMetadata">
-            {{ $tc('sw-product.seoForm.generateMetadata') }}
-        </sw-button>
+    <div class="sw-field sw-field--default">
+        <div class="sw-field__label">
+            <label class="sw-field__label-text">
+                {{ $tc('sw-product.seoForm.generateMetadataLabel') }}
+            </label>
+            <sw-help-text 
+                :text="$tc('sw-product.seoForm.generateMetadataHelpText')">
+            </sw-help-text>
+        </div>
+        <div class="sw-field__content">
+            <sw-button 
+                variant="primary" 
+                size="small"
+                :disabled="isGenerating || !canGenerateMetadata"
+                :isLoading="isGenerating"
+                @click="onGenerateMetadata">
+                {{ $tc('sw-product.seoForm.generateMetadata') }}
+            </sw-button>
+        </div>
     </div>
     {% endblock %}
 {% endblock %}
