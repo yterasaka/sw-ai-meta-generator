@@ -6,7 +6,7 @@ An AI-powered metadata auto-generation plugin for Shopware 6. Automatically gene
 
 ## Features
 
-- **AI-Driven Metadata Generation**: One-click automatic generation of SEO-optimized metadata using OpenAI GPT-4
+- **AI-Driven Metadata Generation**: One-click automatic generation of SEO-optimized metadata using OpenAI API
 - **Multi-language Support**: Generates metadata in the appropriate language based on product language settings
 - **Admin Panel Integration**: Adds "AI Metadata Generation" button to the SEO form in product edit screens
 - **Error Handling**: Proper error display and logging when API calls fail
