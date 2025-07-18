@@ -1,8 +1,19 @@
 {
-    "swag-example": {
-        "general": {
-            "mainMenuItemGeneral": "My custom module",
-            "descriptionTextModule": "Manage this custom module here"
-        }
+  "ai-meta-generator": {
+    "settings": {
+      "title": "AI Meta Generator",
+      "openaiApiKey": "OpenAI API Schlüssel"
     }
+  },
+  "sw-product": {
+    "seoForm": {
+      "generateMetadata": "AI Metadaten generieren",
+      "generateMetadataLabel": "AI Metadaten Generierung",
+      "generateMetadataHelpText": "Generiert automatisch SEO-Metadaten (Titel, Beschreibung, Schlüsselwörter) mit KI. Produktname und Beschreibung müssen zuerst ausgefüllt werden.",
+      "metadataGeneratedSuccess": "Metadaten erfolgreich generiert",
+      "errorGeneratingMetadata": "Fehler beim Generieren der Metadaten",
+      "errorProductNotFound": "Produkt nicht gefunden",
+      "errorMissingRequiredFields": "Produktname und Beschreibung sind für die Metadaten-Generierung erforderlich"
+    }
+  }
 }
