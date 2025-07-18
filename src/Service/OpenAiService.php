@@ -57,7 +57,23 @@ class OpenAiService
                 ]
             ]);
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $responseBody = $response->getBody()->getContents();
+            $data = json_decode($responseBody, true);
+
+            if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+                $this->logger->error('Failed to decode OpenAI API response', [
+                    'json_error' => json_last_error_msg(),
+                    'response_body' => $responseBody
+                ]);
+                throw new \RuntimeException('Invalid JSON response from OpenAI API: ' . json_last_error_msg());
+            }
+
+            if (isset($data['error'])) {
+                $errorMessage = $data['error']['message'] ?? 'Unknown API error';
+                $this->logger->error('OpenAI API returned error', ['error' => $data['error']]);
+                throw new \RuntimeException('OpenAI API error: ' . $errorMessage);
+            }
+
             return $this->parseResponse($data);
 
         } catch (GuzzleException $e) {
