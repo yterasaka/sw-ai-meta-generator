@@ -72,7 +72,7 @@ If you have any issues or questions, please let us know on the GitHub Issues pag
 
 ## Changelog
 
-### v0.0.1 (2025-07-18)
+### v1.0.0 (2025-07-22)
 
 - Initial release
 - Basic AI metadata generation functionality

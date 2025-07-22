@@ -2,7 +2,7 @@
   "name": "ai-meta-generator/ai-meta-generator",
   "description": "ai-meta-generator/ai-meta-generator",
   "type": "shopware-platform-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "require": {
     "shopware/core": "~6.6.0"
