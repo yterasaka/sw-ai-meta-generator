@@ -1,2 +1,0 @@
-const t=`{% block sw_product_detail_content_tabs_seo %} {% parent %} {% block sw_product_detail_seo_general_card_generate_ai_button %} <div class="sw-card__toolbar" style="margin-bottom: 16px;"> <sw-button variant="primary" size="small" @click="onGenerateMetadata"> {{ $tc('ai-meta-generator.product.generateMetadata') }} </sw-button> </div> {% endblock %} {% endblock %}`,{Component:e}=Shopware;e.override("sw-product-detail",{template:t,methods:{onGenerateMetadata(){console.log("Generate AI metadata button clicked")}}});
-//# sourceMappingURL=ai-meta-generator-LhkeL2G2.js.map
