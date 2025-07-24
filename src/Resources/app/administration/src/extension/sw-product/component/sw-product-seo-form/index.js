@@ -93,15 +93,15 @@ Component.override("sw-product-seo-form", {
       }
 
       if (metadata.metaTitle) {
-        this.$set(this.product, "metaTitle", metadata.metaTitle);
+        this.product.metaTitle = metadata.metaTitle;
       }
 
       if (metadata.metaDescription) {
-        this.$set(this.product, "metaDescription", metadata.metaDescription);
+        this.product.metaDescription = metadata.metaDescription;
       }
 
       if (metadata.keywords) {
-        this.$set(this.product, "keywords", metadata.keywords);
+        this.product.keywords = metadata.keywords;
       }
 
       this.$emit("product-changed");
