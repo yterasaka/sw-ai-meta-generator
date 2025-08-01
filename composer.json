@@ -1,5 +1,5 @@
 {
-  "name": "yterasaka/ai-meta-generator",
+  "name": "yterasaka/sw-ai-meta-generator",
   "description": "A Shopware 6 plugin for generating metadata using AI",
   "type": "shopware-platform-plugin",
   "version": "1.0.0",
