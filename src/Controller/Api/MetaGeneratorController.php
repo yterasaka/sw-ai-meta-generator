@@ -9,6 +9,7 @@ use Shopware\Core\PlatformRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Psr\Log\LoggerInterface;
 
@@ -40,8 +41,8 @@ class MetaGeneratorController extends AbstractController
             if (!$productId || !$productName) {
                 return new JsonResponse([
                     'success' => false,
-                    'error' => 'Product ID and name are required'
-                ]);
+                    'error' => 'Product ID and name are required' 
+                ], Response::HTTP_BAD_REQUEST); 
             }
             
             if ($requestLanguageId && $requestLanguageId !== $context->getLanguageId()) {
@@ -76,7 +77,7 @@ class MetaGeneratorController extends AbstractController
             return new JsonResponse([
                 'success' => false,
                 'error' => $e->getMessage()
-            ]);
+            ], Response::HTTP_BAD_REQUEST);
         }
     }
 }

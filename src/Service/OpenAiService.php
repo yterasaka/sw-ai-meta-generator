@@ -78,6 +78,16 @@ class OpenAiService
 
         } catch (GuzzleException $e) {
             $this->logger->error('OpenAI API request failed', ['error' => $e->getMessage()]);
+            
+            if ($e->hasResponse() && $e->getResponse()->getStatusCode() === 429) {
+                $responseBody = $e->getResponse()->getBody()->getContents();
+                $errorData = json_decode($responseBody, true);
+                
+                if (isset($errorData['error']['message'])) {
+                    throw new \RuntimeException($errorData['error']['message']);
+                }
+            }
+            
             throw new \RuntimeException('Failed to generate metadata: ' . $e->getMessage());
         }
     }

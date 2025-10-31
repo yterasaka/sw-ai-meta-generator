@@ -74,11 +74,21 @@ Component.override("sw-product-seo-form", {
         }
       } catch (error) {
         console.error("Error generating metadata:", error);
+        let errorMessage = error.message;
+
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          errorMessage = error.response.data.error;
+        }
+
         this.createNotificationError({
           message:
             this.$tc("sw-product.seoForm.errorGeneratingMetadata") +
             ": " +
-            error.message,
+            errorMessage,
         });
       } finally {
         this.isGenerating = false;
