@@ -1,0 +1,9 @@
+<div class="ai-meta-generator-test-button">
+    <sw-button
+        variant="primary" 
+        @click="testConnection"
+        :disabled="testing || !hasApiKey"
+        :isLoading="testing"> 
+        {{ testing ? $tc('ai-meta-generator.settings.testing') : $tc('ai-meta-generator.settings.testConnection') }}
+    </sw-button>
+</div>

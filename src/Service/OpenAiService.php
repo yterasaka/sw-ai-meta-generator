@@ -78,6 +78,16 @@ class OpenAiService
 
         } catch (GuzzleException $e) {
             $this->logger->error('OpenAI API request failed', ['error' => $e->getMessage()]);
+            
+            if ($e->hasResponse() && $e->getResponse()->getStatusCode() === 429) {
+                $responseBody = $e->getResponse()->getBody()->getContents();
+                $errorData = json_decode($responseBody, true);
+                
+                if (isset($errorData['error']['message'])) {
+                    throw new \RuntimeException($errorData['error']['message']);
+                }
+            }
+            
             throw new \RuntimeException('Failed to generate metadata: ' . $e->getMessage());
         }
     }
@@ -119,5 +129,46 @@ class OpenAiService
             'metaDescription' => $parsed['metaDescription'],
             'keywords' => $parsed['keywords'] ?? ''
         ];
+    }
+
+    public function testConnection(string $apiKey): array
+    {
+        try {
+            $response = $this->httpClient->request('GET', 'https://api.openai.com/v1/models', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $apiKey,
+                    'Content-Type' => 'application/json',
+                ],
+                'timeout' => 10,
+            ]);
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode === 200) {
+                return [
+                    'success' => true,
+                    'statusCode' => 200
+                ];
+            }
+
+            return [
+                'success' => false,
+                'statusCode' => $response->getStatusCode()
+            ];
+        } catch (GuzzleException $e) {
+            if ($e->hasResponse()) {
+                $statusCode = $e->getResponse()->getStatusCode();
+                
+                return [
+                    'success' => false,
+                    'statusCode' => $statusCode
+                ];
+            }
+            
+            return [
+                'success' => false,
+                'statusCode' => 0
+            ];
+        }
     }
 }

@@ -5,19 +5,25 @@ const { Component, Mixin } = Shopware;
 Component.override("sw-product-seo-form", {
   template,
 
-  inject: ["aiMetaGeneratorApiService"],
+  inject: ["aiMetaGeneratorApiService", "systemConfigApiService"],
 
   mixins: [Mixin.getByName("notification")],
 
   data() {
     return {
       isGenerating: false,
+      hasApiKey: false,
     };
+  },
+
+  async created() {
+    await this.checkApiKey();
   },
 
   computed: {
     canGenerateMetadata() {
       return (
+        this.hasApiKey &&
         this.product &&
         this.product.name &&
         this.product.name.trim() !== "" &&
@@ -28,6 +34,18 @@ Component.override("sw-product-seo-form", {
   },
 
   methods: {
+    async checkApiKey() {
+      try {
+        const config = await this.systemConfigApiService.getValues(
+          "AiMetaGenerator.config"
+        );
+        const apiKey = config["AiMetaGenerator.config.openaiApiKey"];
+        this.hasApiKey = apiKey && apiKey.trim() !== "";
+      } catch (error) {
+        this.hasApiKey = false;
+      }
+    },
+
     async onGenerateMetadata() {
       if (!this.product) {
         this.createNotificationError({
@@ -43,8 +61,14 @@ Component.override("sw-product-seo-form", {
         return;
       }
 
+      if (!this.hasApiKey) {
+        this.createNotificationError({
+          message: this.$tc("sw-product.seoForm.errorApiKeyNotConfigured"),
+        });
+        return;
+      }
+
       this.isGenerating = true;
-      console.log("Starting metadata generation...");
 
       try {
         const currentLanguageId = Shopware.Context.api.languageId;
@@ -56,13 +80,9 @@ Component.override("sw-product-seo-form", {
           languageId: currentLanguageId,
         };
 
-        console.log("Calling API service with data:", requestData);
-
         const response = await this.aiMetaGeneratorApiService.generateMetadata(
           requestData
         );
-
-        console.log("API service response:", response);
 
         if (response.success) {
           this.updateProductMetadata(response.data);
@@ -73,16 +93,24 @@ Component.override("sw-product-seo-form", {
           throw new Error(response.error || "Unknown error occurred");
         }
       } catch (error) {
-        console.error("Error generating metadata:", error);
+        let errorMessage = error.message;
+
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          errorMessage = error.response.data.error;
+        }
+
         this.createNotificationError({
           message:
             this.$tc("sw-product.seoForm.errorGeneratingMetadata") +
             ": " +
-            error.message,
+            errorMessage,
         });
       } finally {
         this.isGenerating = false;
-        console.log("Metadata generation completed");
       }
     },
 
@@ -105,12 +133,6 @@ Component.override("sw-product-seo-form", {
       }
 
       this.$emit("product-changed");
-
-      console.log("Product metadata updated:", {
-        metaTitle: this.product.metaTitle,
-        metaDescription: this.product.metaDescription,
-        keywords: this.product.keywords,
-      });
     },
   },
 });

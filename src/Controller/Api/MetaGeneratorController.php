@@ -29,36 +29,43 @@ class MetaGeneratorController extends AbstractController
     #[Route(path: '/api/_action/ai-meta-generator/generate', name: 'api.action.ai-meta-generator.generate', methods: ['POST'])]
     public function generateMetadata(Request $request, Context $context): JsonResponse
     {
-        try {
-            $data = json_decode($request->getContent(), true);
-            
-            $productId = $data['productId'] ?? null;
-            $productName = $data['productName'] ?? null;
-            $description = $data['description'] ?? '';
-            $requestLanguageId = $data['languageId'] ?? null;
-            
-            if (!$productId || !$productName) {
-                return new JsonResponse([
-                    'success' => false,
-                    'error' => 'Product ID and name are required'
-                ]);
-            }
-            
-            if ($requestLanguageId && $requestLanguageId !== $context->getLanguageId()) {
-                $this->logger->info('DEBUG_controller: Creating new context with language ID: ' . $requestLanguageId);
-                $context = new Context(
-                    $context->getSource(),
-                    $context->getRuleIds(),
-                    $context->getCurrencyId(),
-                    [$requestLanguageId],
-                    $context->getVersionId(),
-                    $context->getCurrencyFactor(),
-                    $context->considerInheritance(),
-                    $context->getTaxState(),
-                    $context->getRounding()
-                );
-            }
+        
+        $data = json_decode($request->getContent(), true);
 
+        if ($data === null) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => 'Invalid JSON data'
+            ]);
+        }
+        
+        $productId = $data['productId'] ?? null;
+        $productName = $data['productName'] ?? null;
+        $description = $data['description'] ?? '';
+        $requestLanguageId = $data['languageId'] ?? null;
+        
+        if (!$productId || !$productName) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => 'Product ID and name are required' 
+            ]); 
+        }
+        
+        if ($requestLanguageId && $requestLanguageId !== $context->getLanguageId()) {
+            $context = new Context(
+                $context->getSource(),
+                $context->getRuleIds(),
+                $context->getCurrencyId(),
+                [$requestLanguageId],
+                $context->getVersionId(),
+                $context->getCurrencyFactor(),
+                $context->considerInheritance(),
+                $context->getTaxState(),
+                $context->getRounding()
+            );
+        }
+
+        try {
             $metadata = $this->metaGeneratorService->generateMetadataFromData(
                 $productName,
                 $description,
@@ -70,13 +77,44 @@ class MetaGeneratorController extends AbstractController
                 'data' => $metadata
             ]);
 
-        } catch (\Exception $e) {
+        } catch (\RuntimeException $e) {
             $this->logger->error('Metadata generation failed', ['error' => $e->getMessage()]);
             
             return new JsonResponse([
                 'success' => false,
                 'error' => $e->getMessage()
             ]);
+        } catch (\Exception $e) {
+            $this->logger->error('Unexpected error in metadata generation', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return new JsonResponse([
+                'success' => false,
+                'error' => 'An unexpected error occurred'
+            ]);
+        }
+    }
+
+    #[Route(path: '/api/_action/ai-meta-generator/test-connection', name: 'api.action.ai-meta-generator.test-connection', methods: ['POST'])]
+    public function testApiConnection(Request $request, Context $context): JsonResponse
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+            $apiKey = $data['apiKey'] ?? null;
+
+            if (!$apiKey) {
+                return new JsonResponse(['success' => false]);
+            }
+
+            $testResult = $this->metaGeneratorService->testApiConnection($apiKey);
+
+            return new JsonResponse($testResult);
+        } catch (\Exception $e) {
+            $this->logger->error('API connection test failed', ['error' => $e->getMessage()]);
+
+            return new JsonResponse(['success' => false]);
         }
     }
 }
