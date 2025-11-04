@@ -44,7 +44,6 @@ Component.override("sw-product-seo-form", {
       }
 
       this.isGenerating = true;
-      console.log("Starting metadata generation...");
 
       try {
         const currentLanguageId = Shopware.Context.api.languageId;
@@ -56,13 +55,9 @@ Component.override("sw-product-seo-form", {
           languageId: currentLanguageId,
         };
 
-        console.log("Calling API service with data:", requestData);
-
         const response = await this.aiMetaGeneratorApiService.generateMetadata(
           requestData
         );
-
-        console.log("API service response:", response);
 
         if (response.success) {
           this.updateProductMetadata(response.data);
@@ -73,7 +68,6 @@ Component.override("sw-product-seo-form", {
           throw new Error(response.error || "Unknown error occurred");
         }
       } catch (error) {
-        console.error("Error generating metadata:", error);
         let errorMessage = error.message;
 
         if (
@@ -92,7 +86,6 @@ Component.override("sw-product-seo-form", {
         });
       } finally {
         this.isGenerating = false;
-        console.log("Metadata generation completed");
       }
     },
 
@@ -115,12 +108,6 @@ Component.override("sw-product-seo-form", {
       }
 
       this.$emit("product-changed");
-
-      console.log("Product metadata updated:", {
-        metaTitle: this.product.metaTitle,
-        metaDescription: this.product.metaDescription,
-        keywords: this.product.keywords,
-      });
     },
   },
 });

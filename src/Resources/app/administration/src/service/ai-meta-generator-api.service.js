@@ -12,14 +12,9 @@ class AiMetaGeneratorApiService {
     return this.httpClient
       .post("_action/ai-meta-generator/generate", productData, { headers })
       .then((response) => {
-        console.log("HTTP request successful:", response);
         return response.data;
       })
       .catch((error) => {
-        console.error("HTTP request failed:", error);
-        console.error("Error response:", error.response);
-        console.error("Error status:", error.response?.status);
-        console.error("Error data:", error.response?.data);
         throw error;
       });
   }
