@@ -22,7 +22,8 @@
       "metadataGeneratedSuccess": "Metadata generated successfully",
       "errorGeneratingMetadata": "Error generating metadata",
       "errorProductNotFound": "Product not found",
-      "errorMissingRequiredFields": "Product name and description are required for metadata generation"
+      "errorMissingRequiredFields": "Product name and description are required for metadata generation",
+      "errorApiKeyNotConfigured": "OpenAI API key is not configured. Please configure it in the plugin settings."
     }
   }
 }

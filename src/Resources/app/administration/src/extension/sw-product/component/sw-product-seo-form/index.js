@@ -5,19 +5,25 @@ const { Component, Mixin } = Shopware;
 Component.override("sw-product-seo-form", {
   template,
 
-  inject: ["aiMetaGeneratorApiService"],
+  inject: ["aiMetaGeneratorApiService", "systemConfigApiService"],
 
   mixins: [Mixin.getByName("notification")],
 
   data() {
     return {
       isGenerating: false,
+      hasApiKey: false,
     };
+  },
+
+  async created() {
+    await this.checkApiKey();
   },
 
   computed: {
     canGenerateMetadata() {
       return (
+        this.hasApiKey &&
         this.product &&
         this.product.name &&
         this.product.name.trim() !== "" &&
@@ -28,6 +34,18 @@ Component.override("sw-product-seo-form", {
   },
 
   methods: {
+    async checkApiKey() {
+      try {
+        const config = await this.systemConfigApiService.getValues(
+          "AiMetaGenerator.config"
+        );
+        const apiKey = config["AiMetaGenerator.config.openaiApiKey"];
+        this.hasApiKey = apiKey && apiKey.trim() !== "";
+      } catch (error) {
+        this.hasApiKey = false;
+      }
+    },
+
     async onGenerateMetadata() {
       if (!this.product) {
         this.createNotificationError({
@@ -39,6 +57,13 @@ Component.override("sw-product-seo-form", {
       if (!this.canGenerateMetadata) {
         this.createNotificationError({
           message: this.$tc("sw-product.seoForm.errorMissingRequiredFields"),
+        });
+        return;
+      }
+
+      if (!this.hasApiKey) {
+        this.createNotificationError({
+          message: this.$tc("sw-product.seoForm.errorApiKeyNotConfigured"),
         });
         return;
       }
