@@ -1,31 +1,28 @@
 {
-  "name": "yterasaka/sw-ai-meta-generator",
+  "name": "yukit/ai-meta-generator",
   "description": "A Shopware 6 plugin for generating metadata using AI",
   "type": "shopware-platform-plugin",
   "version": "1.0.0",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Yuki Terasaka"
+    }
+  ],
   "require": {
-    "shopware/core": "^6.6.0"
+    "shopware/core": "~6.7.0"
   },
   "extra": {
-    "shopware-plugin-class": "AiMetaGenerator\\AiMetaGenerator",
+    "shopware-plugin-class": "YukiTAiMetaGenerator\\YukiTAiMetaGenerator",
+    "plugin-icon": "src/Resources/config/plugin.png",
     "label": {
-      "de-DE": "AI Meta Generator",
-      "en-GB": "AI Meta Generator"
-    },
-    "description": {
-      "de-DE": "Plug-in zur Generierung von Metadaten mittels KI",
-      "en-GB": "Plug-in to generate metadata using AI"
+      "en-GB": "AI Meta Generator",
+      "de-DE": "KI Meta Generator"
     }
   },
   "autoload": {
     "psr-4": {
-      "AiMetaGenerator\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "AiMetaGenerator\\Tests\\": "tests/"
+      "YukiTAiMetaGenerator\\": "src/"
     }
   }
 }

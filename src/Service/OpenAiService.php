@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AiMetaGenerator\Service;
+namespace YukiTAiMetaGenerator\Service;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;

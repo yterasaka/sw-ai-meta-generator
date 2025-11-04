@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AiMetaGenerator\Controller\Api;
+namespace YukiTAiMetaGenerator\Controller\Api;
 
 use AiMetaGenerator\Service\MetaGeneratorService;
 use Shopware\Core\Framework\Context;

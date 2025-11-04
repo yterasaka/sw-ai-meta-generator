@@ -13,7 +13,7 @@ An AI-powered metadata auto-generation plugin for Shopware 6. Automatically gene
 
 ## Requirements
 
-- Shopware 6.6.0 or higher
+- Shopware 6.7.0 or higher
 - PHP 8.1 or higher
 - OpenAI API key
 
