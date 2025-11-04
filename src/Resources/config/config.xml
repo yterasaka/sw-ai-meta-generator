@@ -15,6 +15,14 @@
             <helpText lang="de-DE">Geben Sie Ihren OpenAI API-Schlüssel ein, um die AI-Meta-Generierung zu aktivieren</helpText>
             <required>true</required>
         </input-field>
+
+        <component name="ai-meta-generator-test-button">
+            <name>openaiApiTest</name>
+            <label>API Connection Test</label>
+            <label lang="de-DE">API-Verbindungstest</label>
+            <helpText>Test your OpenAI API key connection to verify it works correctly. The entered or edited API key will be applied after saving.</helpText>
+            <helpText lang="de-DE">Testen Sie Ihre OpenAI API-Schlüssel-Verbindung, um zu überprüfen, ob sie korrekt funktioniert. Der eingegebene oder bearbeitete API-Schlüssel wird nach dem Speichern angewendet.</helpText>
+        </component>
     </card>
 
 </config>

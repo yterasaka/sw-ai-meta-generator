@@ -2,7 +2,16 @@
   "ai-meta-generator": {
     "settings": {
       "title": "AI Meta Generator",
-      "openaiApiKey": "OpenAI API Schlüssel"
+      "openaiApiKey": "OpenAI API Schlüssel",
+      "testConnection": "API-Verbindung testen",
+      "testing": "Teste...",
+      "testSuccessful": "API-Verbindung erfolgreich",
+      "testFailed": "API-Verbindung fehlgeschlagen",
+      "apiKeyRequired": "Bitte geben Sie zuerst einen API-Schlüssel ein",
+      "invalidApiKey": "Ungültiger API-Schlüssel",
+      "quotaExceeded": "API-Kontingent überschritten",
+      "connectionError": "Verbindung fehlgeschlagen",
+      "unexpectedError": "Unerwarteter Fehler (Status: {statusCode})"
     }
   },
   "sw-product": {

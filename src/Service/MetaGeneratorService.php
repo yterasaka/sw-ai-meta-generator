@@ -62,4 +62,9 @@ class MetaGeneratorService
 
         return 'en-GB';
     }
+
+    public function testApiConnection(string $apiKey): array
+    {
+        return $this->openAiService->testConnection($apiKey);
+    }
 }

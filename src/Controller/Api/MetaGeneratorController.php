@@ -96,4 +96,25 @@ class MetaGeneratorController extends AbstractController
             ]);
         }
     }
+
+    #[Route(path: '/api/_action/ai-meta-generator/test-connection', name: 'api.action.ai-meta-generator.test-connection', methods: ['POST'])]
+    public function testApiConnection(Request $request, Context $context): JsonResponse
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+            $apiKey = $data['apiKey'] ?? null;
+
+            if (!$apiKey) {
+                return new JsonResponse(['success' => false]);
+            }
+
+            $testResult = $this->metaGeneratorService->testApiConnection($apiKey);
+
+            return new JsonResponse($testResult);
+        } catch (\Exception $e) {
+            $this->logger->error('API connection test failed', ['error' => $e->getMessage()]);
+
+            return new JsonResponse(['success' => false]);
+        }
+    }
 }

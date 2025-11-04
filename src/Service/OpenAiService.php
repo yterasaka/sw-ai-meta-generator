@@ -130,4 +130,45 @@ class OpenAiService
             'keywords' => $parsed['keywords'] ?? ''
         ];
     }
+
+    public function testConnection(string $apiKey): array
+    {
+        try {
+            $response = $this->httpClient->request('GET', 'https://api.openai.com/v1/models', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $apiKey,
+                    'Content-Type' => 'application/json',
+                ],
+                'timeout' => 10,
+            ]);
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode === 200) {
+                return [
+                    'success' => true,
+                    'statusCode' => 200
+                ];
+            }
+
+            return [
+                'success' => false,
+                'statusCode' => $response->getStatusCode()
+            ];
+        } catch (GuzzleException $e) {
+            if ($e->hasResponse()) {
+                $statusCode = $e->getResponse()->getStatusCode();
+                
+                return [
+                    'success' => false,
+                    'statusCode' => $statusCode
+                ];
+            }
+            
+            return [
+                'success' => false,
+                'statusCode' => 0
+            ];
+        }
+    }
 }

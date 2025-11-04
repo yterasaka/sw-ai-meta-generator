@@ -26,6 +26,19 @@ class AiMetaGeneratorApiService {
       "Content-Type": "application/json",
     };
   }
+
+  testConnection(data) {
+    const headers = this.getBasicHeaders();
+
+    return this.httpClient
+      .post("_action/ai-meta-generator/test-connection", data, { headers })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }
 }
 
 Application.addServiceProvider("aiMetaGeneratorApiService", (container) => {
