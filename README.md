@@ -25,10 +25,12 @@ An AI-powered metadata auto-generation plugin for Shopware 6. Automatically gene
 # Git clone
 git clone https://github.com/yterasaka/sw-ai-meta-generator
 
-# Or download and extract ZIP file
+# Or download ZIP file
 ```
 
 ### 2. Activate Plugin
+
+**Command line:**
 
 ```bash
 # Command line
@@ -37,9 +39,17 @@ bin/console plugin:install --activate AiMetaGenerator
 bin/console cache:clear
 ```
 
-Or via admin panel:
+**Or via admin panel:**
 
-1. Extensions > My extensions > Installed
+Option A - Upload ZIP file:
+
+1. Extensions > My extensions > Apps > Upload extension
+2. Select and upload the plugin ZIP file
+3. Install and activate "AI Meta Generator"
+
+Option B - If manually placed in custom/plugins:
+
+1. Extensions > My extensions > Apps
 2. Activate "AI Meta Generator"
 
 ## Configuration
