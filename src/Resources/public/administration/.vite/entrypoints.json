@@ -1,11 +1,11 @@
 {
-  "base": "/bundles/aimetagenerator/administration/",
+  "base": "/bundles/yukitaimetagenerator/administration/",
   "entryPoints": {
-    "ai-meta-generator": {
+    "yuki-t-ai-meta-generator": {
       "css": [],
       "dynamic": [],
       "js": [
-        "/bundles/aimetagenerator/administration/assets/ai-meta-generator-D9x6jBAc.js"
+        "/bundles/yukitaimetagenerator/administration/assets/yuki-t-ai-meta-generator-_w_SFiLp.js"
       ],
       "legacy": false,
       "preload": []

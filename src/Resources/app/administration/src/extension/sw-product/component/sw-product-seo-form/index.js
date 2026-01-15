@@ -37,9 +37,9 @@ Component.override("sw-product-seo-form", {
     async checkApiKey() {
       try {
         const config = await this.systemConfigApiService.getValues(
-          "AiMetaGenerator.config"
+          "YukiTAiMetaGenerator.config"
         );
-        const apiKey = config["AiMetaGenerator.config.openaiApiKey"];
+        const apiKey = config["YukiTAiMetaGenerator.config.openaiApiKey"];
         this.hasApiKey = apiKey && apiKey.trim() !== "";
       } catch (error) {
         this.hasApiKey = false;

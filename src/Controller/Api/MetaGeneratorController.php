@@ -2,7 +2,7 @@
 
 namespace YukiTAiMetaGenerator\Controller\Api;
 
-use AiMetaGenerator\Service\MetaGeneratorService;
+use YukiTAiMetaGenerator\Service\MetaGeneratorService;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Routing\ApiRouteScope;
 use Shopware\Core\PlatformRequest;

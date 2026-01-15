@@ -24,9 +24,9 @@ Component.register("ai-meta-generator-test-button", {
     async checkApiKey() {
       try {
         const config = await this.systemConfigApiService.getValues(
-          "AiMetaGenerator.config"
+          "YukiTAiMetaGenerator.config"
         );
-        const apiKey = config["AiMetaGenerator.config.openaiApiKey"];
+        const apiKey = config["YukiTAiMetaGenerator.config.openaiApiKey"];
         this.hasApiKey = apiKey && apiKey.trim() !== "";
       } catch (error) {
         this.hasApiKey = false;
@@ -38,10 +38,9 @@ Component.register("ai-meta-generator-test-button", {
 
       try {
         const config = await this.systemConfigApiService.getValues(
-          "AiMetaGenerator.config"
+          "YukiTAiMetaGenerator.config"
         );
-        const apiKey = config["AiMetaGenerator.config.openaiApiKey"];
-
+        const apiKey = config["YukiTAiMetaGenerator.config.openaiApiKey"];
         if (!apiKey) {
           this.createNotificationError({
             message: this.$tc("ai-meta-generator.settings.apiKeyRequired"),

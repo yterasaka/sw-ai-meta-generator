@@ -26,7 +26,7 @@ class OpenAiService
 
     public function generateMetadata(string $productName, string $description, string $locale, ?string $salesChannelId = null): array
     {
-        $apiKey = $this->systemConfigService->get('AiMetaGenerator.config.openaiApiKey', $salesChannelId);
+        $apiKey = $this->systemConfigService->get('YukiTAiMetaGenerator.config.openaiApiKey', $salesChannelId);
 
         if (!$apiKey) {
             throw new \RuntimeException('OpenAI API key is not configured');
