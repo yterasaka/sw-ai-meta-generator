@@ -5,6 +5,7 @@ namespace YukiTAiMetaGenerator\Service;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\System\SalesChannel\Context\SalesChannelContextSource;
 
 class MetaGeneratorService
 {

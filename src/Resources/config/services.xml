@@ -15,8 +15,6 @@
         <service id="YukiTAiMetaGenerator\Service\MetaGeneratorService">
             <argument type="service" id="YukiTAiMetaGenerator\Service\OpenAiService"/>
             <argument type="service" id="language.repository"/>
-            <argument type="service" id="logger"/>
-            <argument>%kernel.environment%</argument>
         </service>
 
         <service id="YukiTAiMetaGenerator\Controller\Api\MetaGeneratorController" public="true">
