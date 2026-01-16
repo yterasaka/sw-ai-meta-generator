@@ -5,7 +5,6 @@ namespace YukiTAiMetaGenerator\Service;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\System\SalesChannel\Context\SalesChannelContextSource;
 
 class MetaGeneratorService
 {
@@ -30,11 +29,7 @@ class MetaGeneratorService
             throw new \RuntimeException('Product name is required for metadata generation');
         }
 
-        $salesChannelId = null;
-        $source = $context->getSource();
-        if ($source instanceof SalesChannelContextSource) {
-            $salesChannelId = $source->getSalesChannelId();
-        }
+        $salesChannelId = $this->getSalesChannelIdFromContext($context);
 
         $generatedMetadata = $this->openAiService->generateMetadata(
             $productName,
@@ -62,6 +57,17 @@ class MetaGeneratorService
         }
 
         return 'en-GB';
+    }
+
+    private function getSalesChannelIdFromContext(Context $context): ?string
+    {
+        $source = $context->getSource();
+        
+        if (method_exists($source, 'getSalesChannelId')) {
+            return $source->getSalesChannelId();
+        }
+        
+        return null;
     }
 
     public function testApiConnection(string $apiKey): array
