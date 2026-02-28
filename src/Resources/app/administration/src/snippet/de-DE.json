@@ -1,5 +1,5 @@
 {
-  "ai-meta-generator": {
+  "yukit-ai-meta-generator": {
     "settings": {
       "title": "AI Meta Generator",
       "openaiApiKey": "OpenAI API Schlüssel",
@@ -12,9 +12,7 @@
       "quotaExceeded": "API-Kontingent überschritten",
       "connectionError": "Verbindung fehlgeschlagen",
       "unexpectedError": "Unerwarteter Fehler (Status: {statusCode})"
-    }
-  },
-  "sw-product": {
+    },
     "seoForm": {
       "generateMetadata": "AI Metadaten generieren",
       "generateMetadataLabel": "AI Metadaten Generierung",

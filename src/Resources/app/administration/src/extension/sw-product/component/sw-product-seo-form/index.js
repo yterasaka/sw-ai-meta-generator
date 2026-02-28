@@ -5,7 +5,7 @@ const { Component, Mixin } = Shopware;
 Component.override("sw-product-seo-form", {
   template,
 
-  inject: ["aiMetaGeneratorApiService", "systemConfigApiService"],
+  inject: ["yukitAiMetaGeneratorApiService", "systemConfigApiService"],
 
   mixins: [Mixin.getByName("notification")],
 
@@ -49,21 +49,21 @@ Component.override("sw-product-seo-form", {
     async onGenerateMetadata() {
       if (!this.product) {
         this.createNotificationError({
-          message: this.$tc("sw-product.seoForm.errorProductNotFound"),
+          message: this.$tc("yukit-ai-meta-generator.seoForm.errorProductNotFound"),
         });
         return;
       }
 
       if (!this.canGenerateMetadata) {
         this.createNotificationError({
-          message: this.$tc("sw-product.seoForm.errorMissingRequiredFields"),
+          message: this.$tc("yukit-ai-meta-generator.seoForm.errorMissingRequiredFields"),
         });
         return;
       }
 
       if (!this.hasApiKey) {
         this.createNotificationError({
-          message: this.$tc("sw-product.seoForm.errorApiKeyNotConfigured"),
+          message: this.$tc("yukit-ai-meta-generator.seoForm.errorApiKeyNotConfigured"),
         });
         return;
       }
@@ -80,14 +80,14 @@ Component.override("sw-product-seo-form", {
           languageId: currentLanguageId,
         };
 
-        const response = await this.aiMetaGeneratorApiService.generateMetadata(
+        const response = await this.yukitAiMetaGeneratorApiService.generateMetadata(
           requestData
         );
 
         if (response.success) {
           this.updateProductMetadata(response.data);
           this.createNotificationSuccess({
-            message: this.$tc("sw-product.seoForm.metadataGeneratedSuccess"),
+            message: this.$tc("yukit-ai-meta-generator.seoForm.metadataGeneratedSuccess"),
           });
         } else {
           throw new Error(response.error || "Unknown error occurred");
@@ -105,7 +105,7 @@ Component.override("sw-product-seo-form", {
 
         this.createNotificationError({
           message:
-            this.$tc("sw-product.seoForm.errorGeneratingMetadata") +
+            this.$tc("yukit-ai-meta-generator.seoForm.errorGeneratingMetadata") +
             ": " +
             errorMessage,
         });
