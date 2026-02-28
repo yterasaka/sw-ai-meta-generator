@@ -16,7 +16,7 @@
             <required>true</required>
         </input-field>
 
-        <component name="ai-meta-generator-test-button">
+        <component name="yukit-ai-meta-generator-test-button">
             <name>openaiApiTest</name>
             <label>API Connection Test</label>
             <label lang="de-DE">API-Verbindungstest</label>
