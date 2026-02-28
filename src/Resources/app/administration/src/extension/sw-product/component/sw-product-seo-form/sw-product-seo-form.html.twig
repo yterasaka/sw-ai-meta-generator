@@ -5,10 +5,10 @@
     <div class="sw-field sw-field--default">
         <div class="sw-field__label">
             <label class="sw-field__label-text">
-                {{ $tc('sw-product.seoForm.generateMetadataLabel') }}
+                {{ $tc('yukit-ai-meta-generator.seoForm.generateMetadataLabel') }}
             </label>
             <sw-help-text 
-                :text="$tc('sw-product.seoForm.generateMetadataHelpText')">
+                :text="$tc('yukit-ai-meta-generator.seoForm.generateMetadataHelpText')">
             </sw-help-text>
         </div>
         <div class="sw-field__content">
@@ -18,7 +18,7 @@
                 :disabled="isGenerating || !canGenerateMetadata"
                 :isLoading="isGenerating"
                 @click="onGenerateMetadata">
-                {{ $tc('sw-product.seoForm.generateMetadata') }}
+                {{ $tc('yukit-ai-meta-generator.seoForm.generateMetadata') }}
             </sw-button>
         </div>
     </div>

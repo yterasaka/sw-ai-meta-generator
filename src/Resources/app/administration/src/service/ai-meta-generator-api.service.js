@@ -10,7 +10,7 @@ class AiMetaGeneratorApiService {
     const headers = this.getBasicHeaders();
 
     return this.httpClient
-      .post("_action/ai-meta-generator/generate", productData, { headers })
+      .post("_action/yukit/ai-meta-generator/generate", productData, { headers })
       .then((response) => {
         return response.data;
       })
@@ -31,7 +31,7 @@ class AiMetaGeneratorApiService {
     const headers = this.getBasicHeaders();
 
     return this.httpClient
-      .post("_action/ai-meta-generator/test-connection", data, { headers })
+      .post("_action/yukit/ai-meta-generator/test-connection", data, { headers })
       .then((response) => {
         return response.data;
       })
@@ -41,7 +41,7 @@ class AiMetaGeneratorApiService {
   }
 }
 
-Application.addServiceProvider("aiMetaGeneratorApiService", (container) => {
+Application.addServiceProvider("yukitAiMetaGeneratorApiService", (container) => {
   const initContainer = Application.getContainer("init");
 
   return new AiMetaGeneratorApiService(

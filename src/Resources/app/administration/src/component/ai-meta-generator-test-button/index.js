@@ -2,12 +2,12 @@ import template from "./ai-meta-generator-test-button.html.twig";
 
 const { Component, Mixin } = Shopware;
 
-Component.register("ai-meta-generator-test-button", {
+Component.register("yukit-ai-meta-generator-test-button", {
   template,
 
   mixins: [Mixin.getByName("notification")],
 
-  inject: ["systemConfigApiService", "aiMetaGeneratorApiService"],
+  inject: ["systemConfigApiService", "yukitAiMetaGeneratorApiService"],
 
   data() {
     return {
@@ -43,24 +43,24 @@ Component.register("ai-meta-generator-test-button", {
         const apiKey = config["YukiTAiMetaGenerator.config.openaiApiKey"];
         if (!apiKey) {
           this.createNotificationError({
-            message: this.$tc("ai-meta-generator.settings.apiKeyRequired"),
+            message: this.$tc("yukit-ai-meta-generator.settings.apiKeyRequired"),
           });
           return;
         }
 
-        const response = await this.aiMetaGeneratorApiService.testConnection({
+        const response = await this.yukitAiMetaGeneratorApiService.testConnection({
           apiKey: apiKey,
         });
 
         if (response.success) {
           this.createNotificationSuccess({
-            message: this.$tc("ai-meta-generator.settings.testSuccessful"),
+            message: this.$tc("yukit-ai-meta-generator.settings.testSuccessful"),
           });
         } else {
           const errorMessage = this.getErrorMessage(response.statusCode);
           this.createNotificationError({
             message:
-              this.$tc("ai-meta-generator.settings.testFailed") +
+              this.$tc("yukit-ai-meta-generator.settings.testFailed") +
               ": " +
               errorMessage,
           });
@@ -68,9 +68,9 @@ Component.register("ai-meta-generator-test-button", {
       } catch (error) {
         this.createNotificationError({
           message:
-            this.$tc("ai-meta-generator.settings.testFailed") +
+            this.$tc("yukit-ai-meta-generator.settings.testFailed") +
             ": " +
-            this.$tc("ai-meta-generator.settings.connectionError"),
+            this.$tc("yukit-ai-meta-generator.settings.connectionError"),
         });
       } finally {
         this.testing = false;
@@ -80,13 +80,13 @@ Component.register("ai-meta-generator-test-button", {
     getErrorMessage(statusCode) {
       switch (statusCode) {
         case 401:
-          return this.$tc("ai-meta-generator.settings.invalidApiKey");
+          return this.$tc("yukit-ai-meta-generator.settings.invalidApiKey");
         case 429:
-          return this.$tc("ai-meta-generator.settings.quotaExceeded");
+          return this.$tc("yukit-ai-meta-generator.settings.quotaExceeded");
         case 0:
-          return this.$tc("ai-meta-generator.settings.connectionError");
+          return this.$tc("yukit-ai-meta-generator.settings.connectionError");
         default:
-          return this.$tc("ai-meta-generator.settings.unexpectedError", {
+          return this.$tc("yukit-ai-meta-generator.settings.unexpectedError", {
             statusCode,
           });
       }

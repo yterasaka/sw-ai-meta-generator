@@ -26,7 +26,7 @@ class MetaGeneratorController extends AbstractController
         $this->logger = $logger;
     }
 
-    #[Route(path: '/api/_action/ai-meta-generator/generate', name: 'api.action.ai-meta-generator.generate', methods: ['POST'])]
+    #[Route(path: '/api/_action/yukit/ai-meta-generator/generate', name: 'api.action.yukit.ai_meta_generator.generate', methods: ['POST'])]
     public function generateMetadata(Request $request, Context $context): JsonResponse
     {
         
@@ -97,7 +97,7 @@ class MetaGeneratorController extends AbstractController
         }
     }
 
-    #[Route(path: '/api/_action/ai-meta-generator/test-connection', name: 'api.action.ai-meta-generator.test-connection', methods: ['POST'])]
+    #[Route(path: '/api/_action/yukit/ai-meta-generator/test-connection', name: 'api.action.yukit.ai_meta_generator.test_connection', methods: ['POST'])]
     public function testApiConnection(Request $request, Context $context): JsonResponse
     {
         try {
