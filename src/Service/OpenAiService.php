@@ -40,8 +40,10 @@ class OpenAiService
                     'Authorization' => 'Bearer ' . $apiKey,
                     'Content-Type' => 'application/json',
                 ],
+                'timeout' => 60,
+                'connect_timeout' => 10,
                 'json' => [
-                    'model' => 'gpt-4.1-mini',
+                    'model' => 'gpt-5.6-luna',
                     'messages' => [
                         [
                             'role' => 'system',
@@ -52,8 +54,6 @@ class OpenAiService
                             'content' => $prompt
                         ]
                     ],
-                    'max_tokens' => 500,
-                    'temperature' => 0.7,
                 ]
             ]);
 
@@ -78,8 +78,12 @@ class OpenAiService
 
         } catch (GuzzleException $e) {
             $this->logger->error('OpenAI API request failed', ['error' => $e->getMessage()]);
-            
-            if ($e->hasResponse() && $e->getResponse()->getStatusCode() === 429) {
+
+            if (
+                $e instanceof \GuzzleHttp\Exception\RequestException
+                && $e->getResponse() !== null
+                && $e->getResponse()->getStatusCode() === 429
+            ) {
                 $responseBody = $e->getResponse()->getBody()->getContents();
                 $errorData = json_decode($responseBody, true);
                 
@@ -156,7 +160,10 @@ class OpenAiService
                 'statusCode' => $response->getStatusCode()
             ];
         } catch (GuzzleException $e) {
-            if ($e->hasResponse()) {
+            if (
+                $e instanceof \GuzzleHttp\Exception\RequestException
+                && $e->getResponse() !== null
+            ) {
                 $statusCode = $e->getResponse()->getStatusCode();
                 
                 return [
