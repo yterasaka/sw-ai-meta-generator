@@ -6,7 +6,7 @@ An AI-powered metadata auto-generation plugin for Shopware 6. Automatically gene
 
 ## Features
 
-- **AI-Driven Metadata Generation**: One-click automatic generation of SEO-optimized metadata using OpenAI API
+- **AI-Driven Metadata Generation**: One-click automatic generation of SEO-optimized metadata using the OpenAI `gpt-5.6-luna` model
 - **Multi-language Support**: Generates metadata in the appropriate language based on product language settings
 - **Admin Panel Integration**: Adds "AI Metadata Generation" button to the SEO form in product edit screens
 - **Error Handling**: Proper error display and logging when API calls fail
@@ -15,7 +15,7 @@ An AI-powered metadata auto-generation plugin for Shopware 6. Automatically gene
 
 - Shopware 6.7.0 or higher
 - PHP 8.1 or higher
-- OpenAI API key
+- OpenAI API key with access to the `gpt-5.6-luna` model
 
 ## Installation
 
@@ -48,6 +48,12 @@ Or via admin panel:
 2. Enter OpenAI API key
 3. Save configuration
 
+## OpenAI API Compatibility
+
+The plugin uses the OpenAI Chat Completions API with the `gpt-5.6-luna` model. Requests use the model's supported default sampling settings and allow up to 60 seconds for metadata generation.
+
+Connection failures and API rate-limit responses are handled without causing an administration request error.
+
 ## Usage
 
 1. Open product edit screen
@@ -71,6 +77,12 @@ Pull requests are welcome!
 If you have any issues or questions, please let us know on the GitHub Issues page.
 
 ## Changelog
+
+### v1.1.0 (2025-08-26)
+
+- Changed the OpenAI model from `gpt-4.1-mini` to `gpt-5.6-luna`
+- Updated request parameters for `gpt-5.6-luna` compatibility
+- Increased the metadata generation timeout and improved connection error handling
 
 ### v1.0.0 (2025-07-22)
 
