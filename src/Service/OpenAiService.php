@@ -43,7 +43,7 @@ class OpenAiService
                 'timeout' => 60,
                 'connect_timeout' => 10,
                 'json' => [
-                    'model' => 'gpt-5.6-luna',
+                    'model' => 'gpt-6-luna',
                     'messages' => [
                         [
                             'role' => 'system',
